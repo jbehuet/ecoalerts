@@ -5,15 +5,15 @@ export type AQI = {
 
 export default function AirInfo({ aqi }: {aqi : AQI }) {
     const aqiLevels = ["Bon", "Moyen", "Mauvais", "Médiocre", "Dangereux"];
-    const aqiDescription = aqi !== null ? aqiLevels[aqi.code_qual - 1] : "Inconnu";
+    const aqiDescription = aqi  ? aqiLevels[aqi.code_qual - 1] : "Inconnu";
 
     return<p className="no-margin">🌬️ Qualité de l&#39;air :  {
-        aqi !== null ? (
+        aqi ? (
             <>
                 <span className="pastille" style={{backgroundColor: aqi.couleur}}></span>
                 <strong>{aqi.code_qual}</strong> <small>{aqiDescription}</small>
             </>
-            ) : 'Chargement...'}
+        ) : <em>n.c</em>}
         <div/>
     </p>;
 }

@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { createClient } from '@supabase/supabase-js';
 import { OpenAI } from 'openai';
+import {withErrorLogging} from "@/lib/logger";
 
 const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -11,9 +12,9 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 const CACHE_DURATION = 6 * 60 * 60 * 1000; // 6h en ms
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const { ville, aqi, uv, pollen, temperature, profile } = req.body;
-    if (!ville || !aqi) return res.status(400).json({ error: 'city et aqi sont requis' });
+async function handler(req: NextApiRequest, res: NextApiResponse) {
+    const { ville, aqi, uv, pollen, weather, profile } = req.body;
+    if (!ville) return res.status(400).json({ error: 'ville est requis' });
 
     const cacheKey = `${ville}_${profile || 'default'}`.toLowerCase();
 
@@ -34,8 +35,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const prompt = `
         Tu es un assistant environnemental. Donne un conseil utile, court (20 mots max) et pertinent à une personne située à ${ville}.
-        L'indice de pollution de l'air est de ${aqi}/5. L'indice UV est de ${uv != "n.c" ? uv : 'inconnu'}.
-        ${temperature  ? `La température maximale est de : ${temperature}.` : ''}
+        L'indice de pollution de l'air est de ${aqi ? aqi.code_qual + "/5" : "inconnu"}.
+        L'indice UV est de ${weather ? weather.uv : 'inconnu'}.
+        ${weather  ? `La température maximale est de : ${weather.temperature.max}.` : ''}
         ${pollen  ? `Le niveau de pollen est : ${pollen}.` : ''}
         ${profile ? `Profil utilisateur : ${profile}` : ''}
         Donne un seul conseil clair, actionnable et en français.
@@ -59,3 +61,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     return res.status(200).json({ conseil: message });
 }
+
+export default withErrorLogging(handler)

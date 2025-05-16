@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { createClient } from '@supabase/supabase-js';
+import { withErrorLogging } from '@/lib/logger';
 
 const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -18,7 +19,7 @@ const formatDate = (date:Date) => {
     return `${year}-${month}-${day}`;
 };
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { lat, lon, ville, code } = req.query;
     if (!lat || !lon || !ville || !code) return res.status(400).json({ error: 'lat, lon, ville et code requis' });
 
@@ -32,69 +33,61 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     if (error) return res.status(500).json({ error: error });
 
-    const now = Date.now();
-    const isFresh = cached && cached.fetched_at && (now - new Date(cached.fetched_at).getTime()) < CACHE_DURATION;
+    const isFresh = cached && cached.fetched_at && (Date.now() - new Date(cached.fetched_at).getTime()) < CACHE_DURATION;
 
     if (isFresh) {
         return res.status(200).json(cached.data);
     }
 
-
     // fetch AtmoFrance
     let pollen, aqi;
-    try {
-        let atmoFranceRes = await fetch(
-            `https://admindata.atmo-france.org/api/login`,
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username: ATMOFRANCE_USERNAME, password: ATMOFRANCE_PWD }),
-            });
-        const { token } = await atmoFranceRes.json();
+    let atmoFranceRes = await fetch(
+        `https://admindata.atmo-france.org/api/login`,
+        {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: ATMOFRANCE_USERNAME, password: ATMOFRANCE_PWD }),
+        });
+    const { token } = await atmoFranceRes.json();
 
-        const now = formatDate(new Date())
-        atmoFranceRes = await fetch(`https://admindata.atmo-france.org/api/v2/data/indices/pollens?format=geojson&date=${now}&date_historique=${now}&code_zone=${code}&with_geom=false`, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-            }
-        })
-        const resPollen = await atmoFranceRes.json();
-        pollen = {
-            resp : resPollen.features[0].properties.pollen_resp,
-            code_qual: resPollen.features[0].properties.code_qual,
+    const now = formatDate(new Date())
+    atmoFranceRes = await fetch(`https://admindata.atmo-france.org/api/v2/data/indices/pollens?format=geojson&date=${now}&date_historique=${now}&code_zone=${code}&with_geom=false`, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
         }
-
-        atmoFranceRes = await fetch(`https://admindata.atmo-france.org/api/v2/data/indices/atmo?format=geojson&date=${now}&date_historique=${now}&code_zone=${code}&with_geom=false`, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-            }
-        })
-        const resAir = await atmoFranceRes.json();
-        aqi = {
-            code_qual : resAir.features[0].properties.code_qual,
-            couleur: resAir.features[0].properties.coul_qual,
-        }
-    } catch (err) {
-        console.error(err);
+    })
+    const resPollen = await atmoFranceRes.json();
+    pollen = {
+        resp : resPollen.features[0].properties.pollen_resp,
+        code_qual: resPollen.features[0].properties.code_qual,
     }
+
+    atmoFranceRes = await fetch(`https://admindata.atmo-france.org/api/v2/data/indices/atmo?format=geojson&date=${now}&date_historique=${now}&code_zone=${code}&with_geom=false`, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        }
+    })
+    const resAir = await atmoFranceRes.json();
+    aqi = {
+        code_qual : resAir.features[0].properties.code_qual,
+        couleur: resAir.features[0].properties.coul_qual,
+    }
+
 
     // fetch weather
     let weather
-    try {
-        const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,uv_index_max&timezone=Europe%2FBerlin&forecast_days=1`)
-        const weatherData = await weatherRes.json();
-        if (weatherData && weatherData.daily) {
-            weather = {
-                temperature: {
-                    max : weatherData.daily.temperature_2m_max[0],
-                    min : weatherData.daily.temperature_2m_min[0],
-                },
-                uv: weatherData.daily.uv_index_max[0]
-            }
+    const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,uv_index_max&timezone=Europe%2FBerlin&forecast_days=1`)
+    const weatherData = await weatherRes.json();
+    if (weatherData && weatherData.daily) {
+        weather = {
+            temperature: {
+                max : weatherData.daily.temperature_2m_max[0],
+                min : weatherData.daily.temperature_2m_min[0],
+            },
+            uv: weatherData.daily.uv_index_max[0]
         }
-    } catch (err) {
-        console.error(err);
     }
+
 
     const result = {
         aqi,
@@ -113,3 +106,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     return res.status(200).json(result);
 }
+
+export default withErrorLogging(handler);

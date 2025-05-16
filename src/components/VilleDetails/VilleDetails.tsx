@@ -6,6 +6,7 @@ import PollenInfo from "@/components/VilleDetails/components/PollenInfo";
 import UVInfo from "@/components/VilleDetails/components/UVInfo";
 import Conseil from "@/components/VilleDetails/components/Conseil";
 import TemperatureInfo from "@/components/VilleDetails/components/TemperatureInfo";
+import {logError} from "@/lib/logger";
 
 export default function VilleDetails({ ville }: { ville: Ville }) {
     const [data, setData] = useState<any | null>(null);
@@ -30,10 +31,9 @@ export default function VilleDetails({ ville }: { ville: Ville }) {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         ville: ville.nom,
-                        aqi: data.aqi.code_qual,
-                        uv : data.uv,
-                        pollen : data.pollen.code_qual,
-                        temperature : data.weather.temperature.max,
+                        aqi: data.aqi,
+                        pollen : data.pollen,
+                        weather : data.weather,
                         profile: ""
                     }),
                 });
@@ -43,7 +43,7 @@ export default function VilleDetails({ ville }: { ville: Ville }) {
                 // Marque cette ville comme déjà fetchée
                 lastFetchedKey.current = villeKey;
             } catch (err) {
-                console.error('Erreur récupération conseil :', err);
+                await logError("Erreur API conseil", err);
                 setConseil("Pas de conseil disponible aujourd'hui.");
             } finally {
                 setLoading(false);
