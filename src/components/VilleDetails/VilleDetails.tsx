@@ -5,6 +5,7 @@ import AirInfo from "@/components/VilleDetails/components/AirInfo";
 import PollenInfo from "@/components/VilleDetails/components/PollenInfo";
 import UVInfo from "@/components/VilleDetails/components/UVInfo";
 import Conseil from "@/components/VilleDetails/components/Conseil";
+import TemperatureInfo from "@/components/VilleDetails/components/TemperatureInfo";
 
 export default function VilleDetails({ ville }: { ville: Ville }) {
     const [data, setData] = useState<any | null>(null);
@@ -27,7 +28,14 @@ export default function VilleDetails({ ville }: { ville: Ville }) {
                 const conseilRes = await fetch('/api/conseil', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ ville: ville.nom, aqi: data.aqi.code_qual, uv : data.uv, pollen : data.pollen.code_qual, profile: "" }),
+                    body: JSON.stringify({
+                        ville: ville.nom,
+                        aqi: data.aqi.code_qual,
+                        uv : data.uv,
+                        pollen : data.pollen.code_qual,
+                        temperature : data.weather.temperature.max,
+                        profile: ""
+                    }),
                 });
                 const result = await conseilRes.json();
                 setConseil(result.conseil);
@@ -50,12 +58,13 @@ export default function VilleDetails({ ville }: { ville: Ville }) {
     return (
         <>
             <article>
-                <div style={{ display: "flex", justifyContent: "space-between"}}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <div>
                         <h4 className="text-lg font-semibold">Conditions à {ville.nom}</h4>
+                        <TemperatureInfo temperature={data.weather.temperature} />
+                        <UVInfo uv={data.weather.uv} />
                         <AirInfo aqi={data.aqi} />
                         <PollenInfo pollen={data.pollen} />
-                        <UVInfo uv={data.uv} />
                     </div>
                     <VilleImage nom={ville.nom} className="hide-on-mobile"/>
                 </div>

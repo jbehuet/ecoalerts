@@ -8,8 +8,7 @@ const supabase = createClient(
 
 const ATMOFRANCE_USERNAME = process.env.NEXT_PUBLIC_ATMOFRANCE_USERNAME;
 const ATMOFRANCE_PWD = process.env.NEXT_PUBLIC_ATMOFRANCE_PWD;
-const OPENUV_KEY = process.env.NEXT_PUBLIC_OPENUV_KEY;
-const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24h en ms
+const CACHE_DURATION = 6 * 60 * 60 * 1000; // 6h en ms
 
 const formatDate = (date:Date) => {
     const year = date.getFullYear();
@@ -79,19 +78,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         console.error(err);
     }
 
-    // fetch UV index from OpenUV
-    let uv = "n.c"
+    // fetch weather
+    let weather
     try {
-        const uvRes = await fetch(`https://api.openuv.io/api/v1/uv?lat=${lat}&lng=${lon}`, {
-            headers: {
-                'x-access-token': OPENUV_KEY!,
-            },
-        });
-        const uvDataJson = await uvRes.json();
-        if (uvDataJson.result && uvDataJson.result.uv && !Number.isNaN(Number(uvDataJson.result.uv))) {
-            uv = Number(uvDataJson.result.uv).toFixed(1);
-        } else {
-            console.error(uvDataJson);
+        const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,uv_index_max&timezone=Europe%2FBerlin&forecast_days=1`)
+        const weatherData = await weatherRes.json();
+        if (weatherData && weatherData.daily) {
+            weather = {
+                temperature: {
+                    max : weatherData.daily.temperature_2m_max[0],
+                    min : weatherData.daily.temperature_2m_min[0],
+                },
+                uv: weatherData.daily.uv_index_max[0]
+            }
         }
     } catch (err) {
         console.error(err);
@@ -100,7 +99,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const result = {
         aqi,
         pollen,
-        uv,
+        weather,
         fetchedAt: new Date().toISOString()
     };
 

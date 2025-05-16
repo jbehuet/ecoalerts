@@ -12,10 +12,10 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24h en ms
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const { ville, aqi, uv, pollen, profile } = req.body;
+    const { ville, aqi, uv, pollen, temperature, profile } = req.body;
     if (!ville || !aqi) return res.status(400).json({ error: 'city et aqi sont requis' });
 
-    const cacheKey = `${ville}_${aqi}_${uv || 0}_${pollen || 'none'}_${profile || 'default'}`.toLowerCase();
+    const cacheKey = `${ville}_${profile || 'default'}`.toLowerCase();
 
     const { data: cached } = await supabase
         .from('conseils_cache')
@@ -35,6 +35,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const prompt = `
         Tu es un assistant environnemental. Donne un conseil utile, court (20 mots max) et pertinent à une personne située à ${ville}.
         L'indice de pollution de l'air est de ${aqi}/5. L'indice UV est de ${uv != "n.c" ? uv : 'inconnu'}.
+        ${temperature  ? `La température maximale est de : ${temperature}.` : ''}
         ${pollen  ? `Le niveau de pollen est : ${pollen}.` : ''}
         ${profile ? `Profil utilisateur : ${profile}` : ''}
         Donne un seul conseil clair, actionnable et en français.
