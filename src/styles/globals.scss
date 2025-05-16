@@ -4,51 +4,7 @@
   $enable-classes: false
 );
 @use "helper";
-
-.pastille {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    display: inline-block;
-    margin-right: 0.5rem;
-}
-
-/* override tom-select */
-.ts-wrapper,
-.ts-wrapper.input-hidden{
-    --pico-background-color: var(--pico-form-element-background-color);
-    --pico-border-color: var(--pico-form-element-border-color);
-    --pico-color: var(--pico-form-element-color);
-    --pico-box-shadow: none;
-    border: var(--pico-border-width) solid var(--pico-border-color) !important;
-    border-radius: var(--pico-border-radius) !important;
-    outline: 0 !important;
-    background-color: var(--pico-background-color);
-    box-shadow: var(--pico-box-shadow) !important;
-    color: var(--pico-color) !important;
-    font-weight: var(--pico-font-weight) !important;
-    transition: background-color var(--pico-transition), border-color var(--pico-transition), color var(--pico-transition), box-shadow var(--pico-transition) !important;
-
-    .ts-control {
-        border:0 !important;
-        background-image: var(--pico-icon-chevron) !important;
-        background-position: center right .75rem !important;
-        background-size: 1rem auto !important;
-        background-repeat: no-repeat !important;
-        background-color: transparent !important;
-        font-size: 1rem !important;
-
-        height: calc(1rem * var(--pico-line-height) + var(--pico-form-element-spacing-vertical) * 2 + var(--pico-border-width) * 2);
-
-        input {
-            font-size: 1rem !important;
-            height: auto;
-            width: auto;
-        }
-
-        .item {
-            padding-top:calc((1rem * var(--pico-line-height) + var(--pico-form-element-spacing-vertical) * 2 + var(--pico-border-width) * 2)/4);
-        }
-    }
-}
-
+@use "responsive";
+@use "tom-select";
+// components
+@use "ville-details";

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export default function VilleImage({ nom }: { nom: string }) {
+export default function VilleImage({ nom, className }: { nom: string, className: string }) {
     const [imageUrl, setImageUrl] = useState<string | null>(null);
 
     useEffect(() => {
@@ -22,5 +22,5 @@ export default function VilleImage({ nom }: { nom: string }) {
 
     if (!imageUrl) return null;
 
-    return <img src={imageUrl} alt={`Vue de ${nom}`} style={{ borderRadius: '0.25rem', width: '250px', maxHeight: "160px", objectFit: "cover", objectPosition: "center bottom"}} />;
+    return <img className={className} src={imageUrl} alt={`Vue de ${nom}`} style={{ borderRadius: '0.25rem', width: '250px', maxHeight: "160px", objectFit: "cover", objectPosition: "center bottom"}} />;
 }
