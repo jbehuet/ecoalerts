@@ -1,14 +1,18 @@
 import '@/styles/globals.scss'
 import type { AppProps } from 'next/app'
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
       <>
           <header className="container">
-              <hgroup>
-              <h1>EcoAlerts 🌿</h1>
-              <p>Suivez les conditions environnementales près de chez vous</p>
-              </hgroup>
+              <div style={{display: 'flex', justifyContent: "space-between", alignItems: "center"}}>
+                  <hgroup>
+                  <h1>EcoAlerts 🌿</h1>
+                  <p>Suivez les conditions environnementales près de chez vous</p>
+                  </hgroup>
+                  <ThemeToggle />
+              </div>
           </header>
           <main className="container">
               <Component {...pageProps} />

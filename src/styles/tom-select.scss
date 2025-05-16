@@ -1,6 +1,6 @@
 /* override tom-select */
 .ts-wrapper,
-.ts-wrapper.input-hidden{
+.ts-wrapper.input-hidden {
   --pico-background-color: var(--pico-form-element-background-color);
   --pico-border-color: var(--pico-form-element-border-color);
   --pico-color: var(--pico-form-element-color);
@@ -34,5 +34,12 @@
     .item {
       margin: auto 0;
     }
+  }
+}
+
+[data-theme="dark"]{
+  #autocomplete-select-ts-control,
+  .ts-control {
+    color: var(--pico-color) !important;
   }
 }
