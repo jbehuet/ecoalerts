@@ -9,7 +9,7 @@ const supabase = createClient(
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24h en ms
+const CACHE_DURATION = 6 * 60 * 60 * 1000; // 6h en ms
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { ville, aqi, uv, pollen, temperature, profile } = req.body;
