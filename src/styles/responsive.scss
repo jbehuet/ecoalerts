@@ -2,8 +2,16 @@
   display: block;
 }
 
+.no-flex-on-mobile {
+  display: flex;
+}
+
 @media screen and (max-width: 768px) {
   .hide-on-mobile {
     display: none !important;
+  }
+
+  .no-flex-on-mobile {
+    display: block;
   }
 }

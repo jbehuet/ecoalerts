@@ -6,7 +6,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
       <>
           <header className="container">
-              <div style={{display: 'flex', justifyContent: "space-between", alignItems: "center"}}>
+              <div className="no-flex-on-mobile" style={{justifyContent: "space-between", alignItems: "center"}}>
                   <hgroup>
                   <h1>EcoAlerts 🌿</h1>
                   <p>Suivez les conditions environnementales près de chez vous</p>
