@@ -36,12 +36,11 @@ npm install
 ### 3. Créez le fichier `.env.local`
 
 ```env
-NEXT_PUBLIC_SITE_URL=votre_url_public
-NEXT_PUBLIC_SUPABASE_URL=votre_url_supabase
+SUPABASE_URL=votre_url_supabase
 SUPABASE_SERVICE_ROLE_KEY=votre_service_key_supabase
 OPENAI_API_KEY=votre_openai_key
-NEXT_PUBLIC_ATMOFRANCE_USERNAME=votre_atmofrance_username
-NEXT_PUBLIC_ATMOFRANCE_PWD=votre_atmofrance_password
+ATMOFRANCE_USERNAME=votre_atmofrance_username
+ATMOFRANCE_PWD=votre_atmofrance_password
 ```
 
 ### 4. Éxécuter
