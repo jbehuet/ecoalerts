@@ -1,0 +1,161 @@
+@use "@picocss/pico/scss/pico";
+@use "tom-select";
+
+@use "helper";
+@use "responsive";
+@use "icons";
+// components
+@use "ville-details";
+
+:root {
+  --font-family: 'Outfit', sans-serif;
+}
+
+body {
+  font-family: var(--font-family);
+}
+
+header {
+  a {
+    text-decoration: none;
+  }
+}
+
+footer {
+  margin: var(--pico-spacing);
+}
+
+.logo {
+  &.light {
+    display: block;
+  }
+
+  &.dark {
+    display: none;
+  }
+}
+
+[data-theme="dark"]{
+  .logo {
+    &.light {
+      display: none;
+    }
+
+    &.dark {
+      display: block;
+    }
+  }
+}
+
+ul.favorites {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0.25rem 0 0 0;
+
+  li {
+    list-style: none;
+    padding-left: 0.5rem;
+    margin-left: 0;
+
+    &:first-child {
+      margin-left: 0;
+      padding-left: 0;
+    }
+
+    &:nth-child(n+3) {
+      margin-left: 0.5rem;
+      border-left: 1px solid #ccc;
+    }
+  }
+}
+
+// home
+.section{
+  display: flex;
+  @media (max-width: 768px) {
+    display: block;
+  }
+}
+
+#grid-2x2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 1rem;
+  padding: 2rem 0;
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 0.25rem;
+    padding: 0;
+  }
+}
+
+.cell {
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  div {
+    width: 200px;
+    font-size: 0.875em;
+    color:var(--pico-blockquote-footer-color);
+    img{
+      width: 96px;
+    }
+    h5 {
+      margin: 0;
+    }
+    @media (max-width: 768px) {
+      img{
+        width: 64px;
+      }
+    }
+  }
+}
+
+.full-width {
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;
+  z-index: -1;
+  background-color: var(--pico-color);
+  color: var(--pico-background-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  @media (max-width: 768px) {
+    margin-top: 0;
+  }
+
+  .inner-container {
+    padding: 2rem 0;
+    margin: 0 auto;
+    @media (max-width: 768px) {
+      padding: 2rem 1rem;
+    }
+    @media (min-width: 576px) {
+      max-width: 510px;
+    }
+    @media (min-width: 768px) {
+      max-width: 700px;
+    }
+    @media (min-width: 1024px) {
+      max-width: 950px;
+    }
+    @media (min-width: 1280px) {
+      max-width: 1200px;
+    }
+    @media (min-width: 1536px) {
+      max-width:1450px;
+    }
+  }
+
+  h4,p {
+    color: var(--pico-background-color);
+  }
+}

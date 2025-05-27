@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="/favicon.ico" />
+  <title>EcoAlerts – Suivez l’indice environnemental de votre ville</title>
+  <meta name="description" content="EcoAlerts vous permet de consulter gratuitement l’indice environnemental, la qualité de l’air, le pollen et l’indice UV de votre ville, avec des conseils personnalisés." />
+  <meta name="keywords" content="ecoalerts, environnement, qualité de l’air, indice UV, pollen, météo, écologie, ville, pollution" />
+  <meta name="author" content="Jerome BEHUET" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="EcoAlerts – Suivez l’indice environnemental local" />
+  <meta property="og:description" content="Obtenez un score écologique quotidien, la qualité de l’air, l’indice UV et des conseils selon votre ville." />
+  <meta property="og:url" content="https://www.ecoalerts.fr" />
+  <meta property="og:image" content="https://www.ecoalerts.fr/og-default.png" />
+  %sveltekit.head%
+</head>
+<body>
+<main class="container">%sveltekit.body%</main>
+
+<script>
+  const theme = new URL(window.location).searchParams.get('theme');
+
+  document.documentElement.classList.remove('light', 'dark');
+  document.documentElement.classList.add(theme || 'light');
+</script>
+</body>
+</html>

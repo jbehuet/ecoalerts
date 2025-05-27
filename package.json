@@ -1,0 +1,25 @@
+{
+  "name": "EcoAlerts",
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@picocss/pico": "^2.1.1",
+    "@rollup/wasm-node": "^4.41.1",
+    "@supabase/supabase-js": "^2.49.8",
+    "@sveltejs/adapter-netlify": "^5.0.2",
+    "@sveltejs/kit": "^2.21.1",
+    "@vercel/og": "^0.6.8",
+    "esbuild-wasm": "^0.25.5",
+    "notyf": "^3.10.0",
+    "openai": "^4.103.0",
+    "sass": "^1.89.0",
+    "svelte": "^5.33.3",
+    "tom-select": "^2.4.3",
+    "vite": "^6.3.5"
+  },
+  "type": "module"
+}

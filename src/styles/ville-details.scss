@@ -1,0 +1,40 @@
+.pastille {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 0.25rem;
+  margin-left: 0.15rem;
+}
+
+.header{
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  kbd{
+    margin-bottom: var(--pico-typography-spacing-vertical);
+    margin-right: 0.25rem;
+  }
+
+  h4{
+    flex-grow: 1;
+  }
+
+  span{
+    cursor: pointer;
+    margin-bottom: var(--pico-typography-spacing-vertical);
+    @media screen and (min-width: 769px) {
+      width: 32px;
+      height: 32px;
+    }
+  }
+}
+
+.footer{
+  font-size: calc(var(--pico-font-size) / 1.5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color:var(--pico-secondary);
+}

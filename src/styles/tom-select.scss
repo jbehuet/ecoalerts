@@ -1,0 +1,55 @@
+/* override tom-select */
+.ts-wrapper,
+.ts-wrapper.input-hidden {
+  --pico-background-color: var(--pico-form-element-background-color);
+  --pico-border-color: var(--pico-form-element-border-color);
+  --pico-color: var(--pico-form-element-color);
+  --pico-box-shadow: none;
+  border: var(--pico-border-width) solid var(--pico-border-color) !important;
+  border-radius: var(--pico-border-radius) !important;
+  outline: 0 !important;
+  background-color: var(--pico-background-color);
+  box-shadow: var(--pico-box-shadow) !important;
+  color: var(--pico-color) !important;
+  font-weight: var(--pico-font-weight) !important;
+  transition: background-color var(--pico-transition), border-color var(--pico-transition), color var(--pico-transition), box-shadow var(--pico-transition) !important;
+
+  .ts-control {
+    border:0 !important;
+    background-image: var(--pico-icon-search) !important;
+    background-position: center left calc(var(--pico-form-element-spacing-horizontal) + .125rem) !important;
+    background-size: 1rem auto !important;
+    background-repeat: no-repeat !important;
+    background-color: transparent !important;
+    font-size: 1rem !important;
+    padding-inline-start: calc(var(--pico-form-element-spacing-horizontal) + 1.75rem) !important;
+    height: calc(1rem * var(--pico-line-height) + var(--pico-form-element-spacing-vertical) * 2 + var(--pico-border-width) * 2);
+
+    input {
+      font-size: 1rem !important;
+      height: auto;
+      width: auto;
+    }
+
+    .item {
+      margin: auto 0;
+    }
+  }
+}
+
+[data-theme="dark"]{
+  #autocomplete-select-ts-control,
+  .ts-control {
+    color: var(--pico-color) !important;
+  }
+}
+
+.ts-dropdown{
+  border: var(--pico-border-width) solid var(--pico-border-color) !important;
+  font-size: inherit !important;
+  color: var(--pico-color) !important;
+  background-color: var(--pico-form-element-background-color) !important;
+  box-shadow: var(--pico-card-box-shadow) !important;
+  border-radius: 0 0 var(--pico-border-radius) var(--pico-border-radius) !important;
+  margin: 1px 0 0 !important;
+}
