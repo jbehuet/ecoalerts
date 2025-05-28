@@ -21,7 +21,7 @@
     flex-grow: 1;
   }
 
-  span{
+  span.icon{
     cursor: pointer;
     margin-bottom: var(--pico-typography-spacing-vertical);
     @media screen and (min-width: 769px) {
@@ -37,4 +37,10 @@
   align-items: center;
   justify-content: space-between;
   color:var(--pico-secondary);
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    font-size: var(--pico-font-size);
+    gap: var(--pico-spacing);
+  }
 }

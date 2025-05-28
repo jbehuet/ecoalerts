@@ -1,5 +1,12 @@
 ## Changelog – EcoAlerts
 
+### v0.0.2 – 28 mai 2025
+
+- Parallélisation des appels aux indicateurs
+- Redirection si la ville n'existe pas
+- Ajout logger
+- Amélioration style mobile
+
 ### v0.0.1 – 22 mai 2025
 
 🚀 Première version MVP fonctionnelle
@@ -15,7 +22,7 @@ Fonctionnalités principales :
 - Calcul d'un **score environnemental global (EcoScore)**
 - **Conseil du jour** généré par GPT via OpenAI API, avec cache Supabase
 - Image de la ville dynamique (API Wikipedia)
-- Partage de la ville (préparation OG)
+- Partage de la ville
 - Système de **favoris stockés localement**
 - Mode clair / sombre avec **PicoCSS** + toggle manuel
 - Logo, favicon, typographie Outfit (Google Fonts)

@@ -3,7 +3,7 @@
     import TomSelect from "tom-select";
     import "tom-select/dist/css/tom-select.css";
 
-    let { placeholder = 'Choisissez une option', ville =  $bindable(), defaultValue } = $props();
+    let { placeholder = 'Choisissez une option', handleChange, defaultValue } = $props();
     let tom = $state(null);
 
     const fetchCommunes =  async (value)=> {
@@ -44,7 +44,7 @@
             onChange: (value) => {
                 const selectedVille = tom.options[value];
                 if (selectedVille) {
-                    ville = selectedVille;
+                    handleChange(selectedVille);
                     tom.blur();
                 }
                 // Nettoyer le champ et vider les options
@@ -56,10 +56,11 @@
         if (defaultValue){
             fetchCommunes(defaultValue).then(data => {
                 if (!data?.length) {
-                    ville = null;
+                    handleChange();
                     return;
                 }
-                const v = data[0];
+                const v = data.find(v => v.nom.toLowerCase() === defaultValue.toLowerCase());
+                if (!v) return;
                 // Injecte l'option et la sélectionne
                 tom.addOption(v);
                 tom.setValue(`${v.nom} (${v.codePostal})`);
@@ -75,7 +76,7 @@
         if (defaultValue && tom) {
             fetchCommunes(defaultValue).then(data => {
                 if (!data?.length) {
-                    ville = null;
+                    handleChange();
                     return;
                 }
                 const v = data.find(d => d.nom.toLowerCase() == defaultValue.toLowerCase());

@@ -18,7 +18,7 @@
 </main>
 <footer class="container">
     <div class="no-flex-on-mobile" style="justify-content: space-between; align-items: center" >
-        <div><small>Made with ❤ ©2025 - v0.0.1</small></div>
+        <div><small>Made with ❤ ©2025 - v0.0.2</small></div>
         <small>📨 <a href="	https://github.com/jbehuet/ecoalerts/issues/new?labels=feedback">Une suggestion ? Un bug ?</a></small>
         <ThemeToggle />
     </div>

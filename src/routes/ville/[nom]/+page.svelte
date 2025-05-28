@@ -12,6 +12,7 @@
     import PollenInfo from "$lib/components/pollenInfo.svelte";
     import RestrictionsEau from "$lib/components/rescritionsEau.svelte";
     import Conseil from "$lib/components/conseil.svelte";
+    import {goto} from "$app/navigation";
 
     const { data } = $props();
     let ville = $state();
@@ -22,53 +23,54 @@
     const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
     const partageUrl = `${baseUrl}/ville/${encodeURIComponent(data.nom)}`;
 
-    $effect(()=>{
-        if (ville) {
-            const villeKey = `${ville.nom}_${ville.lat}_${ville.lon}`;
-            if (lastFetchedKey && lastFetchedKey === villeKey) return;
-            const fetchData = async () => {
-                loading = true;
-                try {
-                    // Récupération des données d'env.
-                    const envRes = await fetch(`/api/environment?lat=${ville.lat}&lon=${ville.lon}&ville=${encodeURIComponent(ville.nom)}&code=${ville.code}`);
-                    const envData = await envRes.json();
-                    villeData = {...envData};
+    function onVilleChange(selectedVile) {
+        ville = selectedVile
+        if (!ville) goto('/');
 
-                    // Récupération du conseil
-                    const conseilRes = await fetch('/api/conseil', {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({
-                            ville: ville.nom,
-                            aqi: villeData.aqi,
-                            pollen: villeData.pollen,
-                            weather: villeData.weather,
-                            eau: villeData.eau,
-                            profile: ""
-                        }),
-                    });
-                    const result = await conseilRes.json();
-                    villeData.conseil = result.conseil;
+        const villeKey = `${ville.nom}_${ville.lat}_${ville.lon}`;
+        if (loading || (lastFetchedKey && lastFetchedKey === villeKey)) return;
 
-                    // Récupération de l'image
-                    const res = await fetch(`https://fr.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(ville.nom)}&prop=pageimages&format=json&pithumbsize=250&origin=*`);
-                    const data = await res.json();
-                    const pages = data.query.pages;
-                    const firstPage = Object.values(pages)[0];
-                    villeData.imageUrl = firstPage?.thumbnail?.source || null;
+        const fetchData = async () => {
+            loading = true;
+            try {
+                // Récupération des données d'env.
+                const envRes = await fetch(`/api/environment?lat=${ville.lat}&lon=${ville.lon}&ville=${encodeURIComponent(ville.nom)}&code=${ville.code}`);
+                const envData = await envRes.json();
+                villeData = {...envData};
 
-                    // Marque cette ville comme déjà fetchée
-                    lastFetchedKey = villeKey;
-                } catch (err) {
-                    console.log(err)
-                } finally {
-                    loading = false;
-                }
-            };
-            fetchData()
-        }
-    })
+                // Récupération du conseil
+                const conseilRes = await fetch('/api/conseil', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        ville: ville.nom,
+                        aqi: villeData.aqi,
+                        pollen: villeData.pollen,
+                        weather: villeData.weather,
+                        eau: villeData.eau,
+                        profile: ""
+                    }),
+                });
+                const result = await conseilRes.json();
+                villeData.conseil = result.conseil;
 
+                // Récupération de l'image
+                const res = await fetch(`https://fr.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(ville.nom)}&prop=pageimages&format=json&pithumbsize=250&origin=*`);
+                const data = await res.json();
+                const pages = data.query.pages;
+                const firstPage = Object.values(pages)[0];
+                villeData.imageUrl = firstPage?.thumbnail?.source || null;
+
+                // Marque cette ville comme déjà fetchée
+                lastFetchedKey = villeKey;
+            } catch (err) {
+                console.log(err)
+            } finally {
+                loading = false;
+            }
+        };
+        fetchData()
+    }
 </script>
 <svelte:head>
     <title>{data.nom} – EcoAlerts</title>
@@ -78,7 +80,7 @@
 
 
 <section>
-    <VilleSelect bind:ville={ville} defaultValue={data.nom} />
+    <VilleSelect handleChange={onVilleChange} defaultValue={data.nom} />
     <FavoritesList />
 </section>
 
@@ -89,7 +91,7 @@
         <article>
             <div class="header">
                 <ScoreGlobal aqi={data.aqi?.code_qual} uv={data.weather?.uv} pollen={data.pollen?.code_qual} hasRestrictions={!!data.eau}/>
-                <h4 class="text-lg font-semibold">Conditions à {ville.nom}</h4>
+                <h4 class="flex"><span class="hide-on-mobile" style="margin-right:5px">Conditions à</span>{ville.nom}</h4>
                 <FavoriteBtn ville={ville} />
             </div>
             <div style="display:flex; justify-content: space-between; align-items:center">
@@ -123,7 +125,7 @@
                     </button>
                 </small>
                 <small>
-                    <em>mis à jour le {new Date(villeData.fetchedAt).toLocaleString('fr-FR', { timeZone: 'Europe/Paris' })}</em>
+                    <em>mis à jour le {new Date(villeData.fetched_at).toLocaleString('fr-FR', { timeZone: 'Europe/Paris' })}</em>
                 </small>
             </div>
         </article>
