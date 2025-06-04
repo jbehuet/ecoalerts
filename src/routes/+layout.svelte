@@ -1,6 +1,9 @@
 <script>
     import '$styles/globals.scss';
+    import SyncBtn from '$lib/components/syncBtn.svelte';
     import ThemeToggle from '$lib/components/themeToggle.svelte';
+
+    export let data;
 </script>
 <header class="container">
     <div class="no-flex-on-mobile" style="justify-content: space-between; align-items: center">
@@ -11,6 +14,7 @@
             </a>
             <p>Suivez les conditions environnementales près de chez vous</p>
         </hgroup>
+        <SyncBtn user={data.user} />
     </div>
 </header>
 <main class="container">

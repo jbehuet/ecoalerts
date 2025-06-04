@@ -36,7 +36,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color:var(--pico-secondary);
+  color:var(--pico-muted-color);
 
   @media (max-width: 768px) {
     flex-direction: column;

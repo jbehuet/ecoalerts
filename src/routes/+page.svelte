@@ -3,11 +3,13 @@ import VilleSelect from "$lib/components/villeSelect.svelte";
 import {goto} from "$app/navigation";
 import FavoritesList from "$lib/components/favoritesList.svelte";
 
+export let data;
+
 function onVilleChange(selectedVile) {
     if (selectedVile) {
         goto(`/ville/${selectedVile.nom}`);
     }
-};
+}
 
 </script>
 
@@ -15,7 +17,7 @@ function onVilleChange(selectedVile) {
     <div style="flex-grow: 0.5">
         <label for="select">Entrer le nom de votre ville pour commencer :</label>
         <VilleSelect handleChange={onVilleChange} />
-        <FavoritesList />
+        <FavoritesList user={data.user} />
 
         <div id="grid-2x2">
             <div class="cell">

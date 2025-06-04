@@ -18,6 +18,9 @@ button.link-style {
   font: inherit;
   color: var(--pico-primary);
   cursor: pointer;
+  &:focus{
+    box-shadow:none;
+  }
 }
 
 [data-theme="dark"] {
@@ -36,4 +39,25 @@ button.link-style {
   .hide-dark {
     display: block;
   }
+}
+
+@-webkit-keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotating {
+  from {
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.rotating {
+  animation: rotating 2s linear infinite;
 }

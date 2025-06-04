@@ -1,5 +1,5 @@
 <script>
-    const { ville } = $props();
+    const { ville, user } = $props();
     let localFavorites = $state();
     let inFavorite = $state(false);
 
@@ -16,11 +16,29 @@
         }
     })
 
-    const addFavorite = () => {
+    const addFavorite = async () => {
         let favorites= localFavorites
         if (inFavorite) {
+            if (user){
+                await fetch("/api/favorites", {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email: user.email, ville: ville.nom })
+                })
+            }
             favorites = favorites.filter(f => f != ville.nom)
         } else {
+            if (user){
+                await fetch("/api/favorites", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email: user.email, ville: ville.nom })
+                })
+            }
             favorites.push(ville.nom)
         }
         inFavorite = !inFavorite;

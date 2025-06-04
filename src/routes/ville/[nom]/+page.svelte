@@ -15,13 +15,15 @@
     import {goto} from "$app/navigation";
 
     const { data } = $props();
+    const { nom, user } = data;
+
     let ville = $state();
     let loading = $state(false);
     let villeData = $state();
     let lastFetchedKey = $state();
 
     const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
-    const partageUrl = `${baseUrl}/ville/${encodeURIComponent(data.nom)}`;
+    const partageUrl = `${baseUrl}/ville/${encodeURIComponent(nom)}`;
 
     function onVilleChange(selectedVile) {
         ville = selectedVile
@@ -73,15 +75,15 @@
     }
 </script>
 <svelte:head>
-    <title>{data.nom} – EcoAlerts</title>
-    <meta property="og:title" content="EcoAlerts – Indice environnemental de {data.nom}" />
-    <meta property="og:url" content="https://www.ecoalerts.fr/ville/{data.nom}" />
+    <title>{nom} – EcoAlerts</title>
+    <meta property="og:title" content="EcoAlerts – Indice environnemental de {nom}" />
+    <meta property="og:url" content="https://www.ecoalerts.fr/ville/{nom}" />
 </svelte:head>
 
 
 <section>
-    <VilleSelect handleChange={onVilleChange} defaultValue={data.nom} />
-    <FavoritesList />
+    <VilleSelect handleChange={onVilleChange} defaultValue={nom} />
+    <FavoritesList user={user} />
 </section>
 
 {#if loading}
@@ -90,9 +92,9 @@
     <section>
         <article>
             <div class="header">
-                <ScoreGlobal aqi={data.aqi?.code_qual} uv={data.weather?.uv} pollen={data.pollen?.code_qual} hasRestrictions={!!data.eau}/>
+                <ScoreGlobal aqi={villeData.aqi?.code_qual} uv={villeData.weather?.uv} pollen={villeData.pollen?.code_qual} hasRestrictions={!!villeData.eau}/>
                 <h4 class="flex"><span class="hide-on-mobile" style="margin-right:5px">Conditions à</span>{ville.nom}</h4>
-                <FavoriteBtn ville={ville} />
+                <FavoriteBtn ville={ville} user={user}/>
             </div>
             <div style="display:flex; justify-content: space-between; align-items:center">
                 <div>

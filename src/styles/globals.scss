@@ -9,6 +9,11 @@
 
 :root {
   --font-family: 'Outfit', sans-serif;
+  --pico-primary-hover: #3f846b !important;
+  --pico-primary: #4fa887 !important;
+  --pico-secondary: #56c69d !important;
+  --pico-primary-background: #4fa887 !important;
+  --pico-secondary-background: #56c69d !important;
 }
 
 body {
@@ -16,10 +21,12 @@ body {
   overflow-x: hidden;
 }
 
-header {
-  a {
-    text-decoration: none;
-  }
+input:focus{
+  box-shadow: none !important;
+}
+
+a {
+  text-decoration: none;
 }
 
 footer {
@@ -92,7 +99,7 @@ ul.favorites {
   padding: 2rem 0;
   @media (max-width: 768px) {
     grid-template-columns: repeat(1, 1fr);
-    grid-gap: 0rem;
+    grid-gap: 0;
     padding: 0;
   }
 }
@@ -164,5 +171,24 @@ ul.favorites {
 
   h4,p {
     color: var(--pico-background-color);
+  }
+}
+
+button.green {
+  border-color: #56c69d;
+  background-color: #56c69d;
+}
+
+button.green-inverse {
+  border-color: #56c69d;
+  background-color: #fff;
+  color: #56c69d;
+}
+
+[data-theme="dark"]{
+  button.green-inverse {
+    border-color: var(--pico-color);
+    background-color: var(--pico-background-color-dark);
+    color: var(--pico-color);
   }
 }

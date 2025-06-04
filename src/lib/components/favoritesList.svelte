@@ -2,6 +2,7 @@
     import {onMount} from "svelte";
     import {goto} from "$app/navigation";
 
+    const { user } = $props();
     let favorites = $state([]);
     let favorite = $state(null);
     $effect(() => {
@@ -16,7 +17,19 @@
             favorites = localFavorites;
         };
 
-        handleStorage()
+        if (user){
+            fetch("/api/favorites").then( async res => {
+                if (res.ok) {
+                    const data = await res.json();
+                    const fav = data.favorites.map(f => f.city);
+                    localStorage.setItem("favorites", JSON.stringify(fav));
+                    favorites = fav;
+                }
+            })
+        } else {
+            handleStorage();
+        }
+
         window.addEventListener('localStorageChange', handleStorage);
         return () => {
             window.removeEventListener('localStorageChange', handleStorage);
