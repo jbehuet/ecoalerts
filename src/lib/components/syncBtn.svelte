@@ -1,7 +1,7 @@
 <script>
     import { Notyf } from 'notyf';
     import 'notyf/notyf.min.css';
-    import Modal from '$lib/components/Modal.svelte';
+    import Modal from '$lib/components/modal.svelte';
     import { modalStore } from '$lib/stores/modalStore';
 
     const { user } = $props();
