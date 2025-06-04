@@ -7,7 +7,7 @@
     let favorite = $state(null);
     $effect(() => {
         if (favorite) {
-            goto(`/ville/${favorite}`);
+            goto(`/ville/${favorite}`,  { replaceState: false });
         }
     });
 
@@ -35,6 +35,11 @@
             window.removeEventListener('localStorageChange', handleStorage);
         };
     })
+
+    const handleClick = (event, slug) => {
+        event.preventDefault();
+        goto(`/ville/${slug}`, { replaceState: false });
+    }
 </script>
 
 {#if favorites.length > 0}
@@ -45,5 +50,5 @@
         {/each}
     </ul>
 {:else}
-    <div style={{paddingTop:"0.25rem"}}>Explorer <a href="/ville/Bordeaux">Bordeaux</a>, <a href="/ville/Paris">Paris</a></div>
+    <div style={{paddingTop:"0.25rem"}}>Explorer <a href="/ville/Bordeaux" onclick={(e) => handleClick(e, 'Bordeaux')}>Bordeaux</a>, <a href="/ville/Paris" onclick={(e) => handleClick(e, 'Paris')}>Paris</a></div>
 {/if}

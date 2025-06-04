@@ -15,7 +15,6 @@
     import {goto} from "$app/navigation";
 
     const { data } = $props();
-    const { nom, user } = data;
 
     let ville = $state();
     let loading = $state(false);
@@ -23,11 +22,14 @@
     let lastFetchedKey = $state();
 
     const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
-    const partageUrl = `${baseUrl}/ville/${encodeURIComponent(nom)}`;
+    const partageUrl = `${baseUrl}/ville/${encodeURIComponent(data.nom)}`;
 
     function onVilleChange(selectedVile) {
         ville = selectedVile
-        if (!ville) goto('/');
+        if (!ville) {
+            goto('/');
+            return;
+        }
 
         const villeKey = `${ville.nom}_${ville.lat}_${ville.lon}`;
         if (loading || (lastFetchedKey && lastFetchedKey === villeKey)) return;
@@ -75,15 +77,15 @@
     }
 </script>
 <svelte:head>
-    <title>{nom} – EcoAlerts</title>
-    <meta property="og:title" content="EcoAlerts – Indice environnemental de {nom}" />
-    <meta property="og:url" content="https://www.ecoalerts.fr/ville/{nom}" />
+    <title>{data.nom} – EcoAlerts</title>
+    <meta property="og:title" content="EcoAlerts – Indice environnemental de {data.nom}" />
+    <meta property="og:url" content="https://www.ecoalerts.fr/ville/{data.nom}" />
 </svelte:head>
 
 
 <section>
-    <VilleSelect handleChange={onVilleChange} defaultValue={nom} />
-    <FavoritesList user={user} />
+    <VilleSelect handleChange={onVilleChange} defaultValue={data.nom} />
+    <FavoritesList user={data.user} />
 </section>
 
 {#if loading}
@@ -94,7 +96,7 @@
             <div class="header">
                 <ScoreGlobal aqi={villeData.aqi?.code_qual} uv={villeData.weather?.uv} pollen={villeData.pollen?.code_qual} hasRestrictions={!!villeData.eau}/>
                 <h4 class="flex"><span class="hide-on-mobile" style="margin-right:5px">Conditions à</span>{ville.nom}</h4>
-                <FavoriteBtn ville={ville} user={user}/>
+                <FavoriteBtn ville={ville} user={data.user}/>
             </div>
             <div style="display:flex; justify-content: space-between; align-items:center">
                 <div>
