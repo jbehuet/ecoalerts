@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken';
-import { randomUUID } from 'crypto';
 import { createClient } from '@supabase/supabase-js';
 import { JWT_SECRET, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY } from '$env/static/private';
 
@@ -20,7 +19,9 @@ export function createJWT(payload, expiresIn = '15m') {
  * @returns {string} UUID
  */
 export function generateToken() {
-    return randomUUID();
+    const array = new Uint8Array(32);
+    crypto.getRandomValues(array);
+    return Array.from(array).map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
 /**

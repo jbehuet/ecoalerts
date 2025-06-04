@@ -13,7 +13,6 @@
     "@sveltejs/adapter-netlify": "^5.0.2",
     "@sveltejs/kit": "^2.21.1",
     "@vercel/og": "^0.6.8",
-    "crypto": "^1.0.1",
     "esbuild-wasm": "^0.25.5",
     "jsonwebtoken": "^9.0.2",
     "notyf": "^3.10.0",
