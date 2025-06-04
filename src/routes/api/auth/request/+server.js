@@ -25,16 +25,20 @@ export async function POST({ request }) {
     });
     const magicLink = `${BASE_URL}/api/auth/confirm?token=${token}`;
 
-    const resend = new Resend(RESEND_API_KEY);
-    const {error} = await resend.emails.send({
-        from: 'no-reply@ecoalerts.fr',
-        to: email,
-        subject: 'Votre lien magique - EcoAlerts',
-        html: `<p>Bonjour,</p><p>Cliquez sur ce lien pour vous connecter à EcoAlerts :</p><p><a href="${magicLink}">${magicLink}</a></p>`
-    });
+    if (process.env.NODE_ENV === "production") {
+        const resend = new Resend(RESEND_API_KEY);
+        const {error} = await resend.emails.send({
+            from: 'no-reply@ecoalerts.fr',
+            to: email,
+            subject: 'Votre lien magique - EcoAlerts',
+            html: `<p>Bonjour,</p><p>Cliquez sur ce lien pour vous connecter à EcoAlerts :</p><p><a href="${magicLink}">${magicLink}</a></p>`
+        });
 
-    if (error) {
-        return json({ error: 'Erreur envoi e-mail' }, { status: 500 });
+        if (error) {
+            return json({error: 'Erreur envoi e-mail'}, {status: 500});
+        }
+    } else {
+        console.log("magicLink", magicLink);
     }
 
     return json({ ok: true });

@@ -192,3 +192,55 @@ button.green-inverse {
     color: var(--pico-color);
   }
 }
+
+.header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.burger {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 1001; /* au-dessus du menu */
+  color: var(--pico-primary-background);
+  &:focus {
+    box-shadow: none;
+  };
+}
+
+/* Plein écran menu mobile */
+.nav-overlay {
+  display: none;
+}
+
+.nav-overlay.active {
+  display: flex;
+  position: fixed;
+  inset: 0;
+  background-color: var(--pico-background-color);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  gap: 2rem;
+}
+
+/* Desktop styles */
+@media (min-width: 769px) {
+  .burger {
+    display: none;
+  }
+
+  .nav-overlay {
+    display: flex !important;
+    position: static;
+    flex-direction: row;
+    gap: 1rem;
+    background: none;
+    justify-content: flex-end;
+    align-items: center;
+  }
+}

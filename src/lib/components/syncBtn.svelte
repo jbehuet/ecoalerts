@@ -10,7 +10,7 @@
     let emailError = $state()
     let loading = $state(false);
 
-    const toggleSync = () => {
+    const toggleModal = () => {
         modalStore.open();
     }
 
@@ -29,7 +29,6 @@
     }
 
 
-
     async function login() {
         const notyf = new Notyf();
         loading = true;
@@ -40,11 +39,10 @@
                 body: JSON.stringify({ email })
             });
 
-            console.log("login", res)
             const data = await res.json();
             if (!res.ok) {
                 error = data?.error || 'Erreur inconnue';
-                notyf.error('Erreur lors de synchronisation')
+                notyf.error('Erreur lors de synchronisation');
             } else {
                 notyf.success("Magic link envoyé !");
             }
@@ -56,7 +54,7 @@
     }
 </script>
 
-<button class="link-style flex" onclick={toggleSync}>
+<button class="link-style item-center" onclick={toggleModal}>
     {#if isSynchronized}
         <img src="/icons/stop-sync.png" alt="icone deconnecter" width="32"/>Déconnecter
     {:else}
