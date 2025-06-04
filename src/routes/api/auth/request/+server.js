@@ -25,7 +25,9 @@ export async function POST({ request }) {
     });
     const magicLink = `${BASE_URL}/api/auth/confirm?token=${token}`;
 
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === "development") {
+        console.log("magicLink", magicLink);
+    } else {
         const resend = new Resend(RESEND_API_KEY);
         const {error} = await resend.emails.send({
             from: 'no-reply@ecoalerts.fr',
@@ -37,8 +39,6 @@ export async function POST({ request }) {
         if (error) {
             return json({error: 'Erreur envoi e-mail'}, {status: 500});
         }
-    } else {
-        console.log("magicLink", magicLink);
     }
 
     return json({ ok: true });

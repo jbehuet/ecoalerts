@@ -10,14 +10,14 @@ export async function logErrorToSupabase(error, context = {}) {
     const { message, stack } =
         error instanceof Error ? error : new Error(typeof error === 'string' ? error : 'Unknown error');
 
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === "development") {
+        console.error(stack, JSON.stringify(context));
+    } else {
         const { error } = await supabase.from('logs').insert([
             { message, stack, context: JSON.stringify(context) },
         ]);
         if (error){
             console.error('Erreur d’insertion dans Supabase log :', insertError.message);
         }
-    } else {
-        console.error(stack, JSON.stringify(context));
     }
 }
