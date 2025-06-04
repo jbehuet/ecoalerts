@@ -11,14 +11,15 @@ export const handle = async ({ event, resolve }) => {
     if (accessToken) {
         try {
             const payload = jwt.verify(accessToken, JWT_SECRET);
-            if (typeof payload === 'object' && payload?.email) {
+            if (payload?.email) {
                 event.locals.user = { email: payload.email };
+            } else {
+                tokenError = new jwt.TokenExpiredError('No access token', new Date());
             }
         } catch (err) {
             tokenError = err;
         }
     } else {
-        // simuler expiration
         tokenError = new jwt.TokenExpiredError('No access token', new Date());
     }
 

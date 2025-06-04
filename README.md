@@ -41,6 +41,8 @@ SUPABASE_SERVICE_ROLE_KEY=votre_service_key_supabase
 OPENAI_API_KEY=votre_openai_key
 ATMOFRANCE_USERNAME=votre_atmofrance_username
 ATMOFRANCE_PWD=votre_atmofrance_password
+JWT_SECRET=secret
+RESEND_API_KEY=votre_resend_key
 ```
 
 ### 4. Éxécuter
@@ -73,6 +75,7 @@ Le projet peut être déployé sur [Netlify](https://www.netlify.com/): [ecoaler
 - [Open-meteo](https://www.open-meteo.com/)
 - [VigiEau](https://vigieau.gouv.fr/)
 - [OpenAI API](https://platform.openai.com/)
+- [Resend](https://resend.com)
 
 ---
 
