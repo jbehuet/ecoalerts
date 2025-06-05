@@ -14,7 +14,7 @@ qualité de l’air, indice UV, niveau de pollen, température, et plus encore.
 - Calcul d'un score global (EcoScore) pour une ville
 - Conseil personnalisé du jour
 - Données mises en cache
-- Interface responsive et rapide (Next.js + PicoCSS)
+- Interface responsive et rapide (SvelteKit + PicoCSS)
 
 ---
 
