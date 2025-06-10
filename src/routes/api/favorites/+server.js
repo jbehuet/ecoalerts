@@ -36,15 +36,16 @@ export async function POST({ cookies, request }) {
     if (!email) return json({ error: 'Non authentifié' }, { status: 401 });
 
     const body = await request.json();
-    const { ville } = body;
+    const { ville, code } = body;
 
-    if (!ville) {
-        return json({ error: 'Ville requis' }, { status: 400 });
+    if (!ville || !code){
+        return json({ error: 'Ville et code requis' }, { status: 400 });
     }
 
     const { error } = await supabase.from('favorites').insert({
         email,
         city : ville,
+        city_code: code,
         created_at: new Date().toISOString()
     });
 

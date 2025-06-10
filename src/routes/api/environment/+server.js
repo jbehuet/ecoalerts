@@ -131,6 +131,7 @@ export async function GET({ url }) {
         .from('city_environment_data')
         .select('*')
         .eq('city_name', ville)
+        .eq('city_code', code_zone)
         .order('fetched_at', { ascending: false })
         .limit(1)
         .maybeSingle();
@@ -186,6 +187,7 @@ export async function GET({ url }) {
 
         await supabase.from('city_environment_data').upsert({
             city_name: ville,
+            city_code : code_zone,
             lat: parseFloat(lat),
             lon: parseFloat(lon),
             data,

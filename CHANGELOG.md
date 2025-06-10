@@ -1,10 +1,15 @@
 ## Changelog – EcoAlerts
 
-### v0.0.4 – soon
+### v0.0.x – soon
  
 - Enregistrement email pour envoi mail quotidien
 - Script envoi mail quotidien
 - Script + cron Netlify pour nettoyer les sessions
+
+### v0.0.4 – 10 juin 2025
+
+- Amélioration de la gestion des favoris
+- Fix: Navigation vers des villes homonymes
 
 ### v0.0.3 – 4 juin 2025
 

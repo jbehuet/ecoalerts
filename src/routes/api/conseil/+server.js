@@ -14,11 +14,11 @@ const CACHE_DURATION = 6 * 60 * 60 * 1000; // 6h en ms
 
 export async function POST({ request }) {
     const body = await request.json();
-    const { ville, aqi, pollen, weather, eau, profile } = body;
+    const { ville, code, aqi, pollen, weather, eau, profile } = body;
 
     if (!ville) return json({ error: 'ville est requis' }, { status: 400 });
 
-    const cacheKey = `${ville}_${profile || 'default'}`.toLowerCase();
+    const cacheKey = `${ville}_${code}_${profile || 'default'}`.toLowerCase();
 
     const { data: cached } = await supabase
         .from('conseils_cache')

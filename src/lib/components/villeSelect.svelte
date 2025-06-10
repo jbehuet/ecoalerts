@@ -7,9 +7,9 @@
     let tom = $state(null);
 
     const fetchCommunes =  async (value)=> {
-        const isPostalCode = /^\d{4,5}$/.test(value);
-        const url = isPostalCode
-            ? `https://geo.api.gouv.fr/communes?codePostal=${value}&fields=nom,codesPostaux,centre,code&limit=5`
+        const hasCode = /\d+/.test(value)
+        const url = hasCode
+            ? `https://geo.api.gouv.fr/communes?code=${value.match(/\d+/)[0]}&fields=nom,codesPostaux,centre,code&limit=5`
             : `https://geo.api.gouv.fr/communes?nom=${value}&fields=nom,codesPostaux,centre,code&limit=5`;
 
         const res = await fetch(url);
@@ -53,20 +53,6 @@
             },
         });
 
-        if (defaultValue){
-            fetchCommunes(defaultValue).then(data => {
-                if (!data?.length) {
-                    handleChange();
-                    return;
-                }
-                const v = data.find(v => v.nom.toLowerCase() === defaultValue.toLowerCase());
-                if (!v) return;
-                // Injecte l'option et la sélectionne
-                tom.addOption(v);
-                tom.setValue(`${v.nom} (${v.codePostal})`);
-            });
-        }
-
         return () => {
             if (tom) tom.destroy();
         };
@@ -79,11 +65,9 @@
                     handleChange();
                     return;
                 }
-                const v = data.find(d => d.nom.toLowerCase() == defaultValue.toLowerCase());
-                if (!v) return;
                 // Injecte l'option et la sélectionne
-                tom.addOption(v);
-                tom.setValue(`${v.nom} (${v.codePostal})`);
+                tom.addOption(data[0]);
+                tom.setValue(`${data[0].nom} (${data[0].codePostal})`);
             });
         }
     });

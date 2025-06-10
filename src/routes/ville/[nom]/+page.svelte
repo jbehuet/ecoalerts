@@ -30,6 +30,7 @@
             goto('/');
             return;
         }
+        goto(`/ville/${ville.nom} (${ville.code})`, { replaceState: false });
 
         const villeKey = `${ville.nom}_${ville.lat}_${ville.lon}`;
         if (loading || (lastFetchedKey && lastFetchedKey === villeKey)) return;
@@ -48,6 +49,7 @@
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({
                         ville: ville.nom,
+                        code: ville.code,
                         aqi: villeData.aqi,
                         pollen: villeData.pollen,
                         weather: villeData.weather,

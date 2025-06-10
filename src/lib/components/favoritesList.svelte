@@ -21,7 +21,7 @@
             fetch("/api/favorites").then( async res => {
                 if (res.ok) {
                     const data = await res.json();
-                    const fav = data.favorites.map(f => f.city);
+                    const fav = data.favorites.map(f => `${f.city} (${f.city_code})`);
                     localStorage.setItem("favorites", JSON.stringify(fav));
                     favorites = fav;
                 }
@@ -46,9 +46,9 @@
     <ul class="favorites">
         <li class="item-center"><span class={`icon icon-star-filled`} role="img"></span></li>
         {#each favorites as f}
-            <li><button onclick={() => favorite = f} class="link-style">{f}</button></li>
+            <li><button onclick={() => favorite = f} class="link-style">{f.substr(0, f.indexOf("(") -1)}</button></li>
         {/each}
     </ul>
 {:else}
-    <div style={{paddingTop:"0.25rem"}}>Explorer <a href="/ville/Bordeaux" onclick={(e) => handleClick(e, 'Bordeaux')}>Bordeaux</a>, <a href="/ville/Paris" onclick={(e) => handleClick(e, 'Paris')}>Paris</a></div>
+    <div style={{paddingTop:"0.25rem"}}>Explorer <a href="/ville/Bordeaux" onclick={(e) => handleClick(e, 'Bordeaux (33063)')}>Bordeaux</a>, <a href="/ville/Paris" onclick={(e) => handleClick(e, 'Paris (75056)')}>Paris</a></div>
 {/if}

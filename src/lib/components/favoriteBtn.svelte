@@ -7,7 +7,7 @@
         if (ville) {
             const favorites = JSON.parse(localStorage.getItem('favorites') || '[]')
             for (const favorite of favorites) {
-                if (favorite && favorite === ville.nom) {
+                if (favorite && favorite === `${ville.nom} (${ville.code})`) {
                     inFavorite = true;
                     break;
                 }
@@ -25,10 +25,10 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ email: user.email, ville: ville.nom })
+                    body: JSON.stringify({ email: user.email, ville: ville.nom, code: ville.code })
                 })
             }
-            favorites = favorites.filter(f => f != ville.nom)
+            favorites = favorites.filter(f => f != `${ville.nom} (${ville.code})`)
         } else {
             if (user){
                 await fetch("/api/favorites", {
@@ -36,10 +36,10 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ email: user.email, ville: ville.nom })
+                    body: JSON.stringify({ email: user.email, ville: ville.nom, code: ville.code })
                 })
             }
-            favorites.push(ville.nom)
+            favorites.push(`${ville.nom} (${ville.code})`)
         }
         inFavorite = !inFavorite;
         localFavorites = favorites;
