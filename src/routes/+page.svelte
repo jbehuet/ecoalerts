@@ -12,6 +12,11 @@ function onVilleChange(selectedVile) {
 }
 
 </script>
+<svelte:head>
+    <title>EcoAlerts – Suivez l’indice environnemental local</title>
+    <meta property="og:title" content="EcoAlerts – Suivez l’indice environnemental local" />
+    <meta property="og:url" content="https://www.ecoalerts.fr" />
+</svelte:head>
 
 <div class="section">
     <div style="flex-grow: 0.5">
