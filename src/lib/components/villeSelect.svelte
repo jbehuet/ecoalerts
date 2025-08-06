@@ -7,11 +7,23 @@
     let tom = $state(null);
 
     const fetchCommunes =  async (value)=> {
-        const hasCode = /\d+/.test(value)
-        const url = hasCode
-            ? `https://geo.api.gouv.fr/communes?code=${value.match(/\d+/)[0]}&fields=nom,codesPostaux,centre,code&limit=5`
-            : `https://geo.api.gouv.fr/communes?nom=${value}&fields=nom,codesPostaux,centre,code&limit=5`;
+        const trimmed = value.trim();
+        const padded = /^\d+$/.test(trimmed) ? trimmed.padEnd(5, '0') : trimmed;
+        let url = `https://geo.api.gouv.fr/communes?nom=${encodeURIComponent(trimmed)}&fields=nom,codesPostaux,centre,code&limit=5`;
 
+        if (/^\d{2}$/.test(trimmed)) {
+            // département (ex: "75")
+            url = `https://geo.api.gouv.fr/departements/${trimmed}/communes?fields=nom,codesPostaux,centre,code&limit=5`;
+        } else if (/^\d{5}$/.test(padded)) {
+            // code postal
+            url = `https://geo.api.gouv.fr/communes?codePostal=${padded}&fields=nom,codesPostaux,centre,code&limit=5`;
+        } else if (/^.+\s\(\d{5}\)$/.test(trimmed)) {
+            // "Ville (code INSEE)" avec nom de ville plus souple
+            const inseeCode = trimmed.match(/\((\d{5})\)/)?.[1];
+            if (inseeCode) {
+                url = `https://geo.api.gouv.fr/communes?code=${inseeCode}&fields=nom,codesPostaux,centre,code`;
+            }
+        }
         const res = await fetch(url);
         const data = await res.json();
 
