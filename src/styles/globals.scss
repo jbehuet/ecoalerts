@@ -244,3 +244,18 @@ button.green-inverse {
     align-items: center;
   }
 }
+
+.top-loader{
+  position: absolute;
+  background-color: color-mix( in srgb, var(--pico-primary) 50%, transparent );
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;
+  top: 0;
+  text-align: center;
+  color: #fff;
+  font-style: italic;
+  font-size: 0.8rem;
+}

@@ -44,3 +44,93 @@
     gap: var(--pico-spacing);
   }
 }
+
+/* ===== Skeleton base ===== */
+.skeleton {
+  opacity: 0.85;
+}
+
+.skeleton * {
+  background: linear-gradient(
+                  90deg,
+                  #eceff1 25%,
+                  #f6f8f9 37%,
+                  #eceff1 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+  border-radius: 6px;
+}
+
+/* ===== Layout ===== */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.left {
+  flex: 1;
+}
+
+.right {
+  width: 250px;
+}
+
+/* ===== Elements ===== */
+.skeleton-score {
+  width: 48px;
+  height: 28px;
+}
+
+.skeleton-title {
+  flex: 1;
+  height: 20px;
+}
+
+.skeleton-fav {
+  width: 24px;
+  height: 24px;
+}
+
+.skeleton-line {
+  height: 14px;
+  margin-bottom: 0.6rem;
+  width: 100%;
+}
+
+.skeleton-line.short {
+  width: 60%;
+}
+
+.skeleton-conseil {
+  height: 48px;
+  margin: 1.2rem 0;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.skeleton-small {
+  width: 140px;
+  height: 12px;
+}
+
+/* ===== Animation ===== */
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}

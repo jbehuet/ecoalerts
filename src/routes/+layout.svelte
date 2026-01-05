@@ -3,6 +3,7 @@
     import { onMount } from 'svelte';
     import SyncBtn from '$lib/components/syncBtn.svelte';
     import ThemeToggle from '$lib/components/themeToggle.svelte';
+    import { navigating } from '$app/state';
 
     export let data;
     let menuOpen = false;
@@ -20,6 +21,17 @@
         }
     }
 </script>
+
+{#if navigating?.to}
+    <div class="top-loader" role="status" aria-live="polite">
+        {#if navigating.to?.params?.nom}
+            Chargement de {navigating.to.params.nom}…
+        {:else}
+            Mise à jour des données…
+        {/if}
+    </div>
+{/if}
+
 <header class="container">
     <div class="header-wrapper">
         <hgroup>
@@ -51,7 +63,7 @@
 </main>
 <footer class="container">
     <div class="no-flex-on-mobile" style="justify-content: space-between; align-items: center" >
-        <div><small>Made with ❤ ©2025 - v0.0.4</small></div>
+        <div><small>Made with ❤ ©2026 - v0.1.0</small></div>
         <small>📨 <a href="	https://github.com/jbehuet/ecoalerts/issues/new?labels=feedback">Une suggestion ? Un bug ?</a></small>
         <ThemeToggle />
     </div>

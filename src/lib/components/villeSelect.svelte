@@ -3,7 +3,7 @@
     import TomSelect from "tom-select";
     import "tom-select/dist/css/tom-select.css";
 
-    let { placeholder = 'Choisissez une option', handleChange, defaultValue } = $props();
+    let { placeholder = 'Choisissez une option', handleChange } = $props();
     let tom = $state(null);
 
     const fetchCommunes =  async (value)=> {
@@ -69,21 +69,6 @@
             if (tom) tom.destroy();
         };
     });
-
-    $effect(() => {
-        if (defaultValue && tom) {
-            fetchCommunes(defaultValue).then(data => {
-                if (!data?.length) {
-                    handleChange();
-                    return;
-                }
-                // Injecte l'option et la sélectionne
-                tom.addOption(data[0]);
-                tom.setValue(`${data[0].nom} (${data[0].codePostal})`);
-            });
-        }
-    });
-
 </script>
 
 <select id="autocomplete-select">
