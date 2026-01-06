@@ -254,7 +254,7 @@ button.green-inverse {
 }
 
 .top-loader{
-  position: absolute;
+  position: fixed;
   background-color: color-mix( in srgb, var(--pico-primary) 50%, transparent );
   left: 50%;
   right: 50%;
