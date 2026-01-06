@@ -1,9 +1,9 @@
 <script>
-    const { temperature } = $props();
+    const { temperature, valueOnly } = $props();
 </script>
 
 
-<p class="no-margin">🌡️ Températures :
+<p class="no-margin">{#if !valueOnly}🌡️ Températures :{/if}
     {#if temperature}
         <strong>{temperature.max}°</strong> <small>{temperature.min}°</small>
     {:else}

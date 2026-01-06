@@ -54,6 +54,7 @@
 
         <!-- Fullscreen nav overlay -->
         <nav class="nav-overlay {menuOpen ? 'active' : ''}">
+            <a href="#about">A propos</a>
             <SyncBtn user={data.user} />
         </nav>
     </div>

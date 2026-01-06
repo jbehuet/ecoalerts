@@ -25,7 +25,6 @@
         goto(`/ville/${selectedVille.nom} (${selectedVille.code})`, { replaceState: true });
     };
 
-
     const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
     const partageUrl = `${baseUrl}/ville/${encodeURIComponent(data.ville.nom)}`;
 </script>
