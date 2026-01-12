@@ -16,17 +16,17 @@ function onVilleChange(selectedVille) {
 }
 
 const villesPrincipales = [
-  { nom: "Paris", code: "75056", lat: 48.8566, lon: 2.2967, codePostal: "75000", data: null },
-  { nom: "Marseille", code: "13055", lat: 43.2965, lon: 5.3698, codePostal: "13000", data: null },
-  { nom: "Lyon", code: "69123", lat: 45.7640, lon: 4.8357, codePostal: "69000", data: null },
-  { nom: "Toulouse", code: "31555", lat: 43.6047, lon: 1.4442, codePostal: "31000", data: null },
-  { nom: "Nice", code: "06088", lat: 43.7035, lon: 7.2660, codePostal: "06000", data: null },
-  { nom: "Nantes", code: "44109", lat: 47.2184, lon: -1.5536, codePostal: "44000", data: null },
-  { nom: "Montpellier", code: "34172", lat: 43.6108, lon: 3.8772, codePostal: "34000", data: null },
-  { nom: "Strasbourg", code: "67482", lat: 48.5846, lon: 7.7505, codePostal: "67000", data: null },
-  { nom: "Bordeaux", code: "33063", lat: 44.8378, lon: -0.5792, codePostal: "33000", data: null },
-  { nom: "Lille", code: "59350", lat: 50.6292, lon: 3.0573, codePostal: "59000", data: null },
-  { nom: "Caen", code: "14118", lat: 49.1828, lon: -0.3697, codePostal: "14000", data: null },
+    { nom: "Paris", code: "75056", lat: 48.8566, lon: 2.2967, codePostal: "75000", data: null },
+    { nom: "Marseille", code: "13055", lat: 43.2965, lon: 5.3698, codePostal: "13000", data: null },
+    { nom: "Lyon", code: "69123", lat: 45.7640, lon: 4.8357, codePostal: "69000", data: null },
+    { nom: "Bordeaux", code: "33063", lat: 44.8378, lon: -0.5792, codePostal: "33000", data: null },
+    { nom: "Lille", code: "59350", lat: 50.6292, lon: 3.0573, codePostal: "59000", data: null }
+    // { nom: "Toulouse", code: "31555", lat: 43.6047, lon: 1.4442, codePostal: "31000", data: null },
+    // { nom: "Nice", code: "06088", lat: 43.7035, lon: 7.2660, codePostal: "06000", data: null },
+    // { nom: "Nantes", code: "44109", lat: 47.2184, lon: -1.5536, codePostal: "44000", data: null },
+    // { nom: "Montpellier", code: "34172", lat: 43.6108, lon: 3.8772, codePostal: "34000", data: null },
+    // { nom: "Strasbourg", code: "67482", lat: 48.5846, lon: 7.7505, codePostal: "67000", data: null },
+    // { nom: "Caen", code: "14118", lat: 49.1828, lon: -0.3697, codePostal: "14000", data: null },
 ];
 
 const handleClick = (event, slug) => {
