@@ -19,7 +19,7 @@ export async function POST({ request }) {
     if (!ville) return json({ error: 'ville est requis' }, { status: 400 });
 
     // Desactive openai
-    return json({ conseil: "-" });
+    return json({ conseil: "" });
 
     const cacheKey = `${ville}_${code}_${profile || 'default'}`.toLowerCase();
 

@@ -62,7 +62,7 @@
             </div>
 
             <!-- Conseil -->
-            <div class="skeleton-conseil"></div>
+            <!-- <div class="skeleton-conseil"></div> -->
 
             <!-- Footer -->
             <div class="footer">
@@ -92,7 +92,7 @@
                         <img class="hide-on-mobile" src={data.villeData.imageUrl} alt={`Vue de ${data.ville.nom}`} style="border-radius:0.25rem; width:250px; max-height:160px; object-fit:cover; object-position:center bottom;" />
                     {/if}
                 </div>
-                <Conseil conseil={data.villeData.conseil} />
+                <!-- <Conseil conseil={data.villeData.conseil} /> -->
                 <div class="footer">
                     <small>
                         <button
